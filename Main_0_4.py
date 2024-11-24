@@ -38,7 +38,7 @@ def obtener_torque(url):
                 torque_value = float(torque_text)
                 return torque_value
             else:
-                print("No se encontró el valor del torque en la página.")
+                print("No se encontró el valor del torque")
                 return None
         else:
             print("Error al acceder a la página. Código de estado:", response.status_code)
