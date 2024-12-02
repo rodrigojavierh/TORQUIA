@@ -15,12 +15,12 @@ parametros = cv2.aruco.DetectorParameters()
 diccionario = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_5X5_100)
 
 #CONFIG. CÁMARA
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 cap.set(3,1920)
 cap.set(4,1080)
 
 #LEER IMAGEN DE SILUETA - Vista 01 - "V01"
-im_silueta = cv2.imread("V01_SILU.png")
+im_silueta = cv2.imread("V02_SILU.png")
     # Se podría mejorar cuando se obtiene la info del excel
     # con respecto de la vista en la que se está trabajando
 
@@ -33,8 +33,8 @@ while True:
     # datos=pd.read_excel("BD_Motor001.xlsx", sheet_name="InfoBD")
     # EMULAR DATOS OBTENIDOS DEL EXCEL
     cant_tornillos = 8 #cantidad de tornillos en la vista, se puede obtener del excel
-    listaX=[76, 246, 411, 578, 91, 250, 418, 583]
-    listaY=[65, 65, 62, 63, 258, 230, 225, 225]
+    listaX=[71, 1175, 1175, 67, 804, 807, 438, 440]
+    listaY=[101, 460, 101, 462, 105, 455, 103, 460]
 
     if flag_mod_torqueado==1:
         tornillo_a_ajustar = tornillo_a_ajustar + 1
@@ -58,7 +58,7 @@ while True:
             color_circulo=(0,0,255)
         else:
             color_circulo=(0,0,0)
-        cv2.circle(imagen_negra, (listaX[i],listaY[i]),20, color_circulo,2)
+        cv2.circle(imagen_negra, (listaX[i],listaY[i]),30, color_circulo,5)
 
 
     # SUMAR IMAGENES CON DATOS DE TORNILLOS Y SILUETA
@@ -125,7 +125,7 @@ while True:
     else:
         flag_mod_torqueado = 1
 # SI SE PRESIONA 'ESC', ROMPER LOOP
-    #k = cv2.waitKey(1)
+    k = cv2.waitKey(1)
     if k == 27:
         break
 
