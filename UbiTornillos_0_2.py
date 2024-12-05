@@ -21,7 +21,7 @@ def obt_tornillo(event, x, y, flags, param):
         N=N+1
 
 #guardar lista de coordenadas en excel
-Num_Vista= 2
+Num_Vista= 5
 #Num_Vista=int(input('ingrese el número de vista a realizar'))
 print (Num_Vista)
 
@@ -44,7 +44,7 @@ else:
     print(listaY_excel)
 
     #imagen = cv2.imread("ID001Seccion1Vista1.png")
-    imagen = cv2.imread("V02.png")
+    imagen = cv2.imread(f"V0{Num_Vista}.png")
     listax=[]
     listay=[]
 
@@ -66,13 +66,13 @@ else:
     print (listay)
 
     #Crea imagen modificada con las ubicaciones de tornillos,[metodo de verificacion]
-    imagen = cv2.imread("V02_SILU.png") #debe ser la silueta
+    imagen = cv2.imread(f"V0{Num_Vista}_SILU.png") #debe ser la silueta
     imagen_modificada= imagen.copy()
     for i in range(0,len(listax)):
         cv2.circle(imagen_modificada, (listax[i],listay[i]),20, (0,0,255),2)
     #Guardar imágen creada en carpeta
-    directory=r"G:\PDM\TORQUIA\PrimerProyecto"
-    filename = 'V02_SILU_MOD.png'
+    directory=r"D:/00_ONEDRIVE/01_UNIVERSIDAD/2024_2/PDM/TORQUIA_project/TORQUIA"
+    filename = f'V0{Num_Vista}_SILU_MOD.png'
     cv2.imwrite(filename,imagen_modificada)
 
 

@@ -7,7 +7,7 @@
 #IMPORTAR LIBRERIAS
 import cv2
 import numpy as np
-
+import pandas as pd
 import math
 
 def mover_punto_arbitrario(puntos, punto_arbitrario):
@@ -101,21 +101,31 @@ cap.set(3,1920)
 cap.set(4,1080)
 
 #LEER IMAGEN DE SILUETA - Vista 01 - "V01"
-im_silueta = cv2.imread("V02_SILU.png")
+numVista=4 #Num_Vista inicial
+im_silueta = cv2.imread(f"V0{numVista}_SILU.png")
     # Se podría mejorar cuando se obtiene la info del excel
     # con respecto de la vista en la que se está trabajando
-
-
 flag_mod_torqueado=0
+datos=pd.read_excel("BD_Motor001.xlsx", sheet_name="InfoBD")
 tornillo_a_ajustar=1 #info que se lee inicialmente del excel
-v_estado = [1,0,0,0,0,0,0,0] #2:verde 1:azul 0:rojo #info que se lee inicialmente del excel
+indices = datos.loc[datos['ID_Vista'] == numVista].index
+cant_tornillos = len(indices)
+#v_estado = [1,0,0,0,0,0,0,0] #2:verde 1:azul 0:rojo #info que se lee inicialmente del excel
+
+if cant_tornillos==0:
+        print("no se encontró vista")
+else:
+    datosVista = datos[datos["ID_Vista"] == numVista]
+    v_estado = datosVista['Estado'].tolist()
+    listaX = datosVista['Ub_x'].tolist()
+    listaY = datosVista['Ub_y'].tolist()
 while True:
     # LEER EXCEL CON DATOS DE COORDENADAS DE TORNILLOS (X,Y,COLOR,NUM_VISTA)
-    # datos=pd.read_excel("BD_Motor001.xlsx", sheet_name="InfoBD")
+    
     # EMULAR DATOS OBTENIDOS DEL EXCEL
-    cant_tornillos = 8 #cantidad de tornillos en la vista, se puede obtener del excel
-    listaX=[71, 1175, 1175, 67, 804, 807, 438, 440]
-    listaY=[101, 460, 101, 462, 105, 455, 103, 460]
+    
+
+    
 
     if flag_mod_torqueado==1:
         tornillo_a_ajustar = tornillo_a_ajustar + 1
@@ -156,7 +166,7 @@ while True:
         esquinas, ids, candidatos_malos = cv2.aruco.detectMarkers(gray, diccionario, parameters=parametros)
         
         # DIBUJAR EL MARCADOR OBTENIDO
-        if np.all(ids != None):  # si existe marcadores aruco
+        if np.all(ids == numVista):  # si existe marcadores aruco
             aruco = cv2.aruco.drawDetectedMarkers(frame, esquinas)
             contornos,_= cv2.findContours(maskGreen, cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
             coordenadas= []
