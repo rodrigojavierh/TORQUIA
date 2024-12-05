@@ -76,7 +76,7 @@ while True:
         # DIBUJAR EL MARCADOR OBTENIDO
         if np.all(ids != None):  # si existe marcadores aruco
             aruco = cv2.aruco.drawDetectedMarkers(frame, esquinas)
-
+            print(esquinas[0][0])
             # SUPRERPONER IMAGEN BRINDADA SEGÚN ESCALADO
             sc_x = 15  # Escala de imagen según marcador
             sc_y = 8

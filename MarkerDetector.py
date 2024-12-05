@@ -6,7 +6,8 @@ def dibujar(mask,color):
         #cv2.drawContours(frame,contornos, -1, (255,0,0), 3)
     for c in contornos:
         area=cv2.contourArea(c)
-        if area>3000:
+        print(area)
+        if area>40:
             M=cv2.moments(c)
             if (M["m00"]==0): M["m00"]=1
             x=int(M["m10"]/M["m00"])
@@ -19,7 +20,7 @@ def dibujar(mask,color):
 
 cap=cv2.VideoCapture(0)
 
-GreenBajo=np.array([40,100,20],np.uint8)
+GreenBajo=np.array([30,60,200],np.uint8)
 GreenAlto=np.array([70,255,255], np.uint8)
 
 BlueBajo=np.array([80,100,20],np.uint8)
@@ -34,7 +35,7 @@ while True:
         maskBlue=cv2.inRange(frameHSV,BlueBajo,BlueAlto)
         
         dibujar(maskGreen,(255,0,0))
-        dibujar(maskBlue,(0,0,255))
+        #dibujar(maskBlue,(0,0,255))
         #maskBlue=cv2.inRange(frameHSV,BlueBajo,BlueAlto)
         #maskTot=cv2.add(maskGreen,maskBlue)
         #maskRes=cv2.bitwise_and(frame,frame, mask= maskGreen)
